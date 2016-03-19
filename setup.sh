@@ -7,6 +7,12 @@ if [[ $dir = $HOME ]]; then
   exit 1
 fi
 
+# Install zsh and oh-my-zsh
+apt-get install -y zsh
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+chsh -s /bin/zsh vagrant
+zsh
+
 files=(
   ".vimrc"
   ".vim"

@@ -61,7 +61,7 @@ function precmd() {
 # }
 
 # Enable rbenv shims and autocompletion (if present)
-if type "rbenv" > /dev/null; then
+if type "rbenv" > /dev/null 2>&1; then
   eval "$(rbenv init -)"
 fi
 
