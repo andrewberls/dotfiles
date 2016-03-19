@@ -1,4 +1,3 @@
-# Set up dotfiles for a Vagrant user
 # Note: this script WILL override any existing files in your home directory
 
 dir=`pwd`
@@ -31,7 +30,5 @@ done
 
 ln -sf "$dir/bin" "$HOME/bin"
 chmod a+x $HOME/bin/*
-
-chown -R vagrant:vagrant ./* ./.*
 
 echo "Setup complete; reload your terminal to changes to take effect."
