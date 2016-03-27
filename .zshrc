@@ -60,11 +60,6 @@ function precmd() {
 #   export PROMPT="%{$FG[051]%}%n %~%{$FG[013]%}$(parse_git_branch)%{$NORMAL%} $ "
 # }
 
-# Enable rbenv shims and autocompletion (if present)
-if type "rbenv" > /dev/null 2>&1; then
-  eval "$(rbenv init -)"
-fi
-
 # Load up autojump (if present)
 [[ -f ~/.autojump/etc/profile.d/autojump.zsh ]] && source ~/.autojump/etc/profile.d/autojump.zsh
 
