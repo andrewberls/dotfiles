@@ -12,7 +12,11 @@
 # You can edit files using `ef 1` or `ef 2` respectively
 # Defaults to the first file
 
-files = `git status --porcelain`.split("\n").map { |line| line[3..line.length] }
+current_dir = File.basename(Dir.pwd)
+files = `git status --porcelain`.split("\n").map do |line|
+  line[3..line.length].gsub(/^#{current_dir}\//, '')
+end
+
 selected = []
 
 if ARGV.empty?
