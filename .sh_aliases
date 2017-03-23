@@ -82,6 +82,9 @@ alias cmake='c; make'
 alias ccmake='c; make clean; make'
 alias mc='make clean'
 alias vims='vim -S s.vim'
+function vimr {
+  vim -R $1
+}
 
 alias up='cd ../'
 alias up.='up'
