@@ -141,6 +141,9 @@ map :mouseoff :set mouse=<CR>
 map :cc <Leader>cb
 map :cu <Leader>cu
 
+" :nw as a shortcut for disabling line wrap
+map :nw <Esc>:set nowrap<CR>
+
 " Open new split panes to right and bottom
 set splitbelow
 set splitright
