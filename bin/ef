@@ -12,17 +12,14 @@
 # You can edit files using `ef 1` or `ef 2` respectively
 # Defaults to the first file
 
-current_dir = File.basename(Dir.pwd)
-files = `git status --porcelain`.split("\n").map do |line|
-  line[3..line.length].gsub(/^#{current_dir}\//, '')
-end
-
+files = `git status --porcelain`.split("\n").map { |line| line[3..line.length] }
 selected = []
+
+current_dir = File.basename(Dir.pwd)
+files = files.map { |f| f.gsub(/^#{current_dir}\//, '') }
 
 if ARGV.empty?
   selected = files[0]
-elsif ARGV[0] == 'all'
-  selected = files.reject { |f| File.directory?(f) }.join(' ')
 else
   ARGV.each do |idx|
     selected << files[idx.to_i - 1] # 1-based index
@@ -30,5 +27,10 @@ else
   selected = selected.join(' ')
 end
 
-exec  "vim #{selected}"
+git_root = `git rev-parse --show-toplevel`.chomp
+if git_root != Dir.pwd
+  prefix = Dir.pwd.gsub(/^#{git_root}\//, '') + '/'
+  selected.gsub!(/^#{prefix}/, '')
+end
 
+exec "vim #{selected}"
