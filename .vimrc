@@ -54,7 +54,7 @@ highlight LineNr ctermfg=darkgrey ctermbg=NONE
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
-set wildignore+=*target/*,*build/*,*tmp/*,*vendor/*,*gradle/*,*.pyc*,*.a*,*.hi*,*.o*
+set wildignore+=*target/*,*build/*,*tmp/*,*vendor/*,*gradle/*,*.pyc*,*.a*,*.hi*,*.o*,*_site/*
 
 " Alises for typo fixes. Argh.
 map :W <Esc>:w
