@@ -3,7 +3,7 @@
 #   acki - case-insensitive search
 #   ackr - regex search
 function ack {
- ~/bin/ack -Q "$@"
+  ~/bin/ack -Q $@
 }
 alias acki='ack -i'         # Case-insensitive search
 alias ackr="command ack $@" # Regex search, undoing default -Q alias
@@ -124,7 +124,7 @@ function cs {
 }
 
 function csf {
-  cs | fpp
+  git status | fpp
 }
 
 # Show diff of last commit
@@ -139,6 +139,7 @@ alias co='git checkout'
 # Branches
 alias master='co master'
 alias mm='git merge master'
+alias grm='git rebase master'
 
 # Which branches have been merged?
 function mstat {
