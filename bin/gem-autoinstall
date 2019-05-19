@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+# Usage: gem-autoinstall
+# Detect gemspec in current directory, build it and install built gem
+
+files = Dir.entries('.')
+
+def single(xs)
+  xs.length == 1 || raise("single called with coll > length 1")
+  xs.first
+end
+
+gemspec = single(files.select { |f| File.extname(f) == '.gemspec' })
+
+puts "gem build #{gemspec}"
+`gem build #{gemspec}`
+
+gem = single(files.select { |f| File.extname(f) == '.gem' })
+
+puts "gem install #{gem}"
+`gem install #{gem}`
