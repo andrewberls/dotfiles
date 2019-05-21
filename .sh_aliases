@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Ack aliased to use literal search by default
 #   ack - literal search
 #   acki - case-insensitive search
@@ -29,10 +31,29 @@ function dir {
     exit
   fi
 }
+alias dirk='dir -k'
+
+# 'Find file'. Shows matching files paths within the current directory
+# Ex: ff shared.js
+# => app/assets/javascripts/shared.js
+# => public/javascripts/shared.js
+# => etc...
+function ff {
+  mdfind -onlyin . $1 | grep $1
+}
+
+function linecount {
+  cat $1 | wc -l
+}
+
+function copy {
+  pbcopy < $1
+}
+alias opy=copy
 
 # Print the fully qualified path to a file
 function realpath () {
-  readlink -e $1
+  readlink $1
 }
 
 function murder {
@@ -41,18 +62,11 @@ function murder {
 
 alias c='clear'
 alias ls='ls -F'
-alias ll='lsa'
+alias ll='c; ls -lah'
 alias cls='c; ls'
 alias x='exit'
 alias xx='exit'
 alias ':x'='x'
-alias cmake='c; make'
-alias ccmake='c; make clean; make'
-alias mc='make clean'
-alias vims='vim -S s.vim'
-function vimr {
-  vim -R $1
-}
 
 alias up='cd ../'
 alias up.='up'
@@ -60,6 +74,19 @@ alias up..='cd ../../'
 alias up...='cd ../../../'
 alias up....='cd ../../../../'
 alias up.....='cd ../../../../../'
+
+# Vim
+alias v='vim'
+function vims {
+  if [[ -n "$1" ]]
+  then
+    vim -S "$1"
+  else
+    vim -S s.vim
+  fi
+}
+alias vimr='vim -R'
+alias dangling='tree -a . | grep swp'
 
 # Rails
 alias be='bundle exec'
@@ -73,9 +100,15 @@ alias xit='exit'
 alias rpsec='rspec'
 alias vi='vim'
 alias im='vim'
+alias :e='vim'
+alias 'jc'='j'
+alias 'J'='j'
+alias ck='ack'
+alias at='cat'
 
 # Git
-alias s='git status'
+export GIT_COMPLETION_NO_REMOTE_BRANCHES=1
+export GIT_COMPLETION_NO_TAGS=1
 
 # Run git status if in git repo, else ls -la
 function cs {
@@ -98,12 +131,28 @@ function glc {
    git show --oneline "$sha"
 }
 
+alias amend='git commit --amend'
 alias co='git checkout'
-
-# Branches
+alias copycommit='git format-commit | pbcopy'
+alias gap='git add --patch'
+alias gcb='git clean-branches'
+alias gd='git diff'
+alias gds='gd --staged'
+alias gitm='git commit --verbose'
+alias gr='git refresh'
+alias grc='git rebase --continue'
+alias grm='git rebase master'
+alias gsl='git stash list'
+alias gsp='git stash pop'
 alias master='co master'
 alias mm='git merge master'
-alias grm='git rebase master'
+alias resethead='git reset --soft HEAD^'
+alias s='git status'
+alias uns='git unstage'
+
+function forcepush {
+  git push -f origin $(git rev-parse --abbrev-ref HEAD) $@
+}
 
 # Which branches have been merged?
 function report {
@@ -116,18 +165,11 @@ function report {
 }
 alias r='report'
 
-# Commits
-alias gitm='git commit --verbose'
-alias amend='git commit --amend'
-
-# Diffs
-alias gd='git diff'
-alias gds='gd --staged'
-
-# Stashing
-alias gsl='git stash list'
-alias gsp='git stash pop'
-alias uns='git unstage'
+function grr {
+  git stash save
+  git refresh
+  git stash pop
+}
 
 # Show diff for a numbered git stash
 # Ex: gssp 3
@@ -145,8 +187,6 @@ function glo {
     git log --oneline $1
   fi
 }
-
-alias gap='git add --patch'
 
 function conflict () {
   ack ">>>"
