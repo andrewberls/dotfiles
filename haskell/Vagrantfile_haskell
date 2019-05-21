@@ -1,0 +1,68 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+$BASE = <<SCRIPT
+VHOME=/home/vagrant
+
+sudo apt-get update -y
+sudo apt-get install -y vim git
+cd $VHOME && git clone https://github.com/andrewberls/dotfiles.git
+cd $VHOME/dotfiles && HOME=$VHOME sudo bash setup.sh
+
+cd $VHOME
+apt-get install -y libgmp-dev
+apt-get install -y zlib1g-dev
+
+cd $VHOME
+wget https://www.haskell.org/ghc/dist/7.10.1/ghc-7.10.1-x86_64-unknown-linux-deb7.tar.bz2
+bzip2 -d ghc-7.10.1-x86_64-unknown-linux-deb7.tar.bz2
+tar xvf ghc-7.10.1-x86_64-unknown-linux-deb7.tar
+cd ghc-7.10.1/
+HOME=$VHOME ./configure
+HOME=$VHOME make install
+rm $VHOME/ghc-7.10.1-x86_64-unknown-linux-deb7.tar
+
+cd $VHOME
+wget http://hackage.haskell.org/package/cabal-install-1.22.4.0/cabal-install-1.22.4.0.tar.gz
+tar xzvf cabal-install-1.22.4.0.tar.gz
+cd cabal-install-1.22.4.0/
+HOME=$VHOME sh ./bootstrap.sh
+echo 'export PATH=$HOME/.cabal/bin:$PATH' >> $VHOME/.bashrc
+rm $VHOME/cabal-install-1.22.4.0.tar.gz
+
+cd $VHOME
+chown -R vagrant:vagrant $VHOME/.cabal $VHOME/.ghc
+
+cd $VHOME
+CABAL=$VHOME/.cabal/bin/cabal
+$CABAL update
+$CABAL install alex
+$CABAL install happy
+
+echo ':set prompt "\ESC[36mλ> \ESC[m"' >> $VHOME/.ghci
+chown vagrant:vagrant $VHOME/.ghci
+chmod g-w $VHOME/.ghci
+SCRIPT
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "ubuntu/trusty64"
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  # If true, then any SSH connections made will enable agent forwarding.
+  # Default value: false
+  # config.ssh.forward_agent = true
+
+  config.vm.synced_folder ".", "/home/vagrant/code"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--memory", "2048"]
+  end
+
+  config.vm.provision "shell", inline: $BASE
+end
