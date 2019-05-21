@@ -5,8 +5,6 @@
 function ack {
   ~/bin/ack -Q $@
 }
-alias acki='ack -i'         # Case-insensitive search
-alias ackr="command ack $@" # Regex search, undoing default -Q alias
 
 # 'Find process'. Doesn't show grep itself.
 # Ex: fps redis
@@ -32,35 +30,6 @@ function dir {
   fi
 }
 
-# Force remove a file or directory, with confirmation
-# Ex: rc file.txt junkDirectory/
-# => Are you sure you want to remove file.txt?
-# etc...
-function rc {
-  if [[ -n "$1" ]]
-  then
-    for var in "$@"
-    do
-      if [[ -d "$var" ]]
-      then
-        read -p "Remove directory $var and all of its contents? " -r
-      elif [[ -f "$var" ]]
-      then
-        read -p "Remove file $var? " -r
-      fi
-
-      if [[ $REPLY =~ ^[Yy]$ ]]
-      then
-        rm -rf $var
-      else
-        echo "Aborted."
-      fi
-    done
-  else
-    echo "Usage: rc [file | directory] ..."
-  fi
-}
-
 # Print the fully qualified path to a file
 function realpath () {
   readlink -e $1
@@ -72,7 +41,6 @@ function murder {
 
 alias c='clear'
 alias ls='ls -F'
-alias lsa='c; ls -lah'
 alias ll='lsa'
 alias cls='c; ls'
 alias x='exit'
@@ -93,14 +61,12 @@ alias up...='cd ../../../'
 alias up....='cd ../../../../'
 alias up.....='cd ../../../../../'
 
-# Rails-y shortcuts
-# ---------------------
+# Rails
 alias be='bundle exec'
 alias rake='be rake'
 alias cons='c;be rails console'
 
-# Typo fixes. If I had a dollar...
-# ---------------------
+# Typo fixes
 alias clera='clear'
 alias qcs='cs'
 alias xit='exit'
@@ -108,8 +74,7 @@ alias rpsec='rspec'
 alias vi='vim'
 alias im='vim'
 
-# Git stuff
-# ---------------------
+# Git
 alias s='git status'
 
 # Run git status if in git repo, else ls -la
@@ -133,7 +98,6 @@ function glc {
    git show --oneline "$sha"
 }
 
-alias ga='git add'
 alias co='git checkout'
 
 # Branches
@@ -142,14 +106,14 @@ alias mm='git merge master'
 alias grm='git rebase master'
 
 # Which branches have been merged?
-function mstat {
+function report {
+  clear
   echo "Merged:"
   git branch --merged
   echo "Not merged:"
   git branch --no-merged
+  git status
 }
-
-alias report='c; mstat; s'
 alias r='report'
 
 # Commits
@@ -159,10 +123,8 @@ alias amend='git commit --amend'
 # Diffs
 alias gd='git diff'
 alias gds='gd --staged'
-alias gdw='gd --color-words'
 
 # Stashing
-alias gss='git stash save'
 alias gsl='git stash list'
 alias gsp='git stash pop'
 alias uns='git unstage'
@@ -185,7 +147,6 @@ function glo {
 }
 
 alias gap='git add --patch'
-alias gpm='git pull origin master'
 
 function conflict () {
   ack ">>>"
