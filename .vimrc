@@ -8,8 +8,8 @@ set nocompatible   " Disable vi compatability
 set expandtab      " Spaces to tabs
 set tabstop=2      " Number of spaces per tab
 set shiftwidth=2   " Number of spaces for indentation
-set relativenumber " Enable line numbers
 set number         " Enable line numbers
+"set relativenumber " Enable line numbers (TODO: disabled for perf)
 set ruler          " Show row and column at bottom right
 set incsearch      " Incremental searches
 set ignorecase     " Ignore cases in searches
@@ -22,6 +22,13 @@ set mouse=a           " Enable mouse mode by default
 set foldmethod=indent " Define folds based on code indentation
 set nofoldenable       " Don't fold by default
 set foldlevel=1
+
+" Make vim use old regex engine to fix lag
+" https://github.com/xolox/vim-easytags/issues/88#issuecomment-69474765
+set regexpengine=1
+
+" Fix mouse after 233 columns
+set ttymouse=sgr
 
 " Map leader to ,
 let mapleader = ","
@@ -36,6 +43,9 @@ noremap ,, ,
 " Disable bells
 set visualbell
 set t_vb=
+
+" Disable line wrap by default
+set nowrap
 
 " Kill the damned Ex mode.
 nnoremap Q <nop>
@@ -54,7 +64,21 @@ highlight LineNr ctermfg=darkgrey ctermbg=NONE
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
-set wildignore+=*target/*,*build/*,*tmp/*,*vendor/*,*gradle/*,*.pyc*,*.a*,*.hi*,*.o*,*_site/*
+" Use CtrlP within current directory
+let g:ctrlp_working_path_mode = 0
+
+" Browse ctags with CtrlP
+" (ctrl-] in, ctrl-t out)
+nnoremap <leader>. :CtrlPTag<cr>
+
+" Search by filename by default
+" let g:ctrlp_by_filename = 1
+
+" Show more results
+let g:ctrlp_max_height = 30
+
+"set wildignore+=*tmp/*,*vendor/*,*gradle/*,*.pyc*,*.a*,*.hi*,*.o*,*target/*,*build/*,*artifacts/*,*lein/*
+set wildignore+=*tmp/*,*gradle/*,*.pyc*,*.a*,*.hi*,*.o*,*target/*,*build/*,*artifacts/*,*lein/*
 
 " Alises for typo fixes. Argh.
 map :W <Esc>:w
@@ -76,8 +100,8 @@ map :nf <Esc>:NERDTreeFind<CR>
 " :nc as a shortcut for closing NERDTree
 map :nc <Esc>:NERDTreeClose<CR>
 
-" Close NERDTree if it is the last and only buffer
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" :nw as a shortcut for disabling line wrap
+map :nw <Esc>:set nowrap<CR>
 
 " Show the status line at the bottom
 :set laststatus=2
@@ -141,9 +165,6 @@ map :mouseoff :set mouse=<CR>
 map :cc <Leader>cb
 map :cu <Leader>cu
 
-" :nw as a shortcut for disabling line wrap
-map :nw <Esc>:set nowrap<CR>
-
 " Open new split panes to right and bottom
 set splitbelow
 set splitright
@@ -152,41 +173,7 @@ set splitright
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
-" Configure vim-indent-guides
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
-let g:indent_guides_start_level=2
-let g:indent_guides_guide_size=1
-
-
 " vim-rspec mappings
 nnoremap <Leader>s :call RunNearestSpec()<CR>
 nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
 nnoremap <Leader>l :call RunLastSpec()<CR>"
-
-
-" RainbowParentheses plugin
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-
-" rp to toggle
-map :rp <Esc>:RainbowParenthesesToggle
-
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
