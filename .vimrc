@@ -55,7 +55,14 @@ nnoremap <Leader>f :set foldenable<CR>
 nnoremap <Leader>nf :set nofoldenable<CR>
 
 " Strip trailing whitespace
-autocmd BufWritePre * :%s/\s\+$//e
+function! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 " Dark grey line numbers
 highlight LineNr ctermfg=darkgrey ctermbg=NONE
