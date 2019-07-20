@@ -132,19 +132,10 @@ map :nopa :set nopaste<CR>
 " :t as an abbreviation for :tabnew
 ca t tabnew
 
-" :tabu as an abbreviation for :Tabularize
-ca tabu Tabularize
-
 " :ack as an alias for :Ack! -Q
 " (Avoids opening first match in buffer, and escapes literal strings)
 cnoreabbrev ack Ack! -Q
 cnoreabbrev Ack Ack! -Q
-
-" :tabue to align by equal signs
-cnoreabbrev tabue Tabularize /=
-
-" :tabub to align by {
-cnoreabbrev tabub Tabularize /{
 
 " Open symbol in a new tab with ctrl-\
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
