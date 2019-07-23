@@ -18,6 +18,8 @@ setopt inc_append_history
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+export TERM=xterm-256color
+
 # Set PATH
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 export PATH=$PATH:$HOME/bin
@@ -54,11 +56,6 @@ NORMAL=$'\033[0m'
 function precmd() {
   export PROMPT="%{$FG[034]%}%~/%{$FG[207]%}%B$(parse_git_branch)%b%{$NORMAL%} $ "
 }
-
-# Cyan remote prompt
-# function precmd() {
-#   export PROMPT="%{$FG[051]%}%n %~%{$FG[013]%}$(parse_git_branch)%{$NORMAL%} $ "
-# }
 
 # Load up autojump (if present)
 [[ -f ~/.autojump/etc/profile.d/autojump.zsh ]] && source ~/.autojump/etc/profile.d/autojump.zsh

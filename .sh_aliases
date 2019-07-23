@@ -42,19 +42,21 @@ function ff {
   mdfind -onlyin . $1 | grep $1
 }
 
+# Print size of the given directory
+# Ex: dirsize app/ => 25M
+function dirsize {
+  du -skh $1
+}
+
 function linecount {
   cat $1 | wc -l
 }
 
+# Copy a file to a clipboard
 function copy {
-  pbcopy < $1
+  cat $1 | pbcopy
 }
 alias opy=copy
-
-# Print the fully qualified path to a file
-function realpath () {
-  readlink $1
-}
 
 function murder {
   sudo killall -9 $1
@@ -146,7 +148,7 @@ alias gsl='git stash list'
 alias gsp='git stash pop'
 alias master='co master'
 alias mm='git merge master'
-alias resethead='git reset --soft HEAD^'
+alias resethead='git reset --soft HEAD^ && git unstage .'
 alias s='git status'
 alias uns='git unstage'
 
