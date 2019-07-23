@@ -1,15 +1,14 @@
 " Load up pathogen.vim for managing plugins
 execute pathogen#infect()
 
-syntax on                 " Enable syntax highlighting
 filetype plugin indent on " Enable filetype plugins for lang-specific scripts
+syntax on                 " Enable syntax highlighting
 
 set nocompatible   " Disable vi compatability
 set expandtab      " Spaces to tabs
 set tabstop=2      " Number of spaces per tab
 set shiftwidth=2   " Number of spaces for indentation
 set number         " Enable line numbers
-"set relativenumber " Enable line numbers (TODO: disabled for perf)
 set ruler          " Show row and column at bottom right
 set incsearch      " Incremental searches
 set ignorecase     " Ignore cases in searches
@@ -20,7 +19,7 @@ set smarttab       " Get backspaces to work with tab-spaces
 set backspace=indent,eol,start
 set mouse=a           " Enable mouse mode by default
 set foldmethod=indent " Define folds based on code indentation
-set nofoldenable       " Don't fold by default
+set nofoldenable      " Don't fold by default
 set foldlevel=1
 
 " Make vim use old regex engine to fix lag
@@ -28,7 +27,9 @@ set foldlevel=1
 set regexpengine=1
 
 " Fix mouse after 233 columns
-set ttymouse=sgr
+if has('mouse_sgr')
+  set ttymouse=sgr
+endif
 
 " Map leader to ,
 let mapleader = ","
@@ -54,58 +55,27 @@ nnoremap Q <nop>
 nnoremap <Leader>f :set foldenable<CR>
 nnoremap <Leader>nf :set nofoldenable<CR>
 
-" Strip trailing whitespace
+" Strip trailing whitespace on save
 function! <SID>StripTrailingWhitespaces()
     let l = line(".")
     let c = col(".")
     %s/\s\+$//e
     call cursor(l, c)
 endfun
-
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 " Dark grey line numbers
 highlight LineNr ctermfg=darkgrey ctermbg=NONE
 
-" Start CtrlP with ctrl-p
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-
-" Use CtrlP within current directory
-let g:ctrlp_working_path_mode = 0
-
-" Browse ctags with CtrlP
-" (ctrl-] in, ctrl-t out)
-nnoremap <leader>. :CtrlPTag<cr>
-
-" Search by filename by default
-" let g:ctrlp_by_filename = 1
-
-" Show more results
-let g:ctrlp_max_height = 30
-
-"set wildignore+=*tmp/*,*vendor/*,*gradle/*,*.pyc*,*.a*,*.hi*,*.o*,*target/*,*build/*,*artifacts/*,*lein/*
 set wildignore+=*tmp/*,*gradle/*,*.pyc*,*.a*,*.hi*,*.o*,*target/*,*build/*,*artifacts/*,*lein/*
 
-" Alises for typo fixes. Argh.
+" Typo fixes
 map :W <Esc>:w
 map :X <Esc>:x
 map K <Esc>k
 
 " jk in insert mode as shortcut for Escape
 inoremap jk <Esc>
-
-" Show dotfiles in NERDTree
-let NERDTreeShowHidden=1
-
-" :nt as a shortcut for opening NERDTree
-map :nt <Esc>:NERDTree<CR>
-
-" :nf as a shortcut for revealing current file in NERDTree
-map :nf <Esc>:NERDTreeFind<CR>
-
-" :nc as a shortcut for closing NERDTree
-map :nc <Esc>:NERDTreeClose<CR>
 
 " :nw as a shortcut for disabling line wrap
 map :nw <Esc>:set nowrap<CR>
@@ -115,8 +85,8 @@ map :nw <Esc>:set nowrap<CR>
 
 " ctrl-l - next tab
 " ctrl-h - previous tab
-map  <C-l> :tabn<CR>
-map  <C-h> :tabp<CR>
+map <C-l> :tabn<CR>
+map <C-h> :tabp<CR>
 
 " coloc/nocoloc to toggle color column
 map :coloc :set colorcolumn=80<CR>
@@ -131,11 +101,6 @@ map :nopa :set nopaste<CR>
 
 " :t as an abbreviation for :tabnew
 ca t tabnew
-
-" :ack as an alias for :Ack! -Q
-" (Avoids opening first match in buffer, and escapes literal strings)
-cnoreabbrev ack Ack! -Q
-cnoreabbrev Ack Ack! -Q
 
 " Open symbol in a new tab with ctrl-\
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
@@ -159,10 +124,6 @@ map :s2d :s/'/"/g<CR>
 map :mouseon :set mouse=a<CR>
 map :mouseoff :set mouse=<CR>
 
-" Alias :cc and :cu to Leader-cc (comment) and Leader-cu (uncomment)
-map :cc <Leader>cb
-map :cu <Leader>cu
-
 " Open new split panes to right and bottom
 set splitbelow
 set splitright
@@ -171,7 +132,33 @@ set splitright
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
-" vim-rspec mappings
+"
+" Plugin configuation
+"
+
+" CtrlP
+let g:ctrlp_map = '<c-p>' " Start with ctrl-p
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 0 " Use CtrlP within current directory
+
+" NERDTree
+let NERDTreeShowHidden=1        " Show dotfiles
+let g:ctrlp_max_height = 30     " Show more results
+map :nt <Esc>:NERDTree<CR>      " :nt to open
+map :nf <Esc>:NERDTreeFind<CR>  " :nf to jump to current file
+map :nc <Esc>:NERDTreeClose<CR> " :nc to close
+
+" Ack
+" :ack as an alias for :Ack! -Q
+" (Avoids opening first match in buffer, and escapes literal strings)
+cnoreabbrev ack Ack! -Q
+cnoreabbrev Ack Ack! -Q
+
+" nerdcommenter
+map :cc <Leader>cb " :cc to comment
+map :cu <Leader>cu " :cu to uncomment
+
+" vim-rspec
 nnoremap <Leader>s :call RunNearestSpec()<CR>
 nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
 nnoremap <Leader>l :call RunLastSpec()<CR>"
