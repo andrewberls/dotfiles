@@ -137,13 +137,14 @@ vnoremap <S-Tab> <gv
 "
 
 " CtrlP
-let g:ctrlp_map = '<c-p>' " Start with ctrl-p
+let g:ctrlp_map = '<c-p>'         " Start with ctrl-p
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 0 " Use CtrlP within current directory
+let g:ctrlp_max_height = 30       " Show more results
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 " NERDTree
 let NERDTreeShowHidden=1        " Show dotfiles
-let g:ctrlp_max_height = 30     " Show more results
 map :nt <Esc>:NERDTree<CR>      " :nt to open
 map :nf <Esc>:NERDTreeFind<CR>  " :nf to jump to current file
 map :nc <Esc>:NERDTreeClose<CR> " :nc to close
