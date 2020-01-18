@@ -145,6 +145,7 @@ let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclu
 
 " NERDTree
 let NERDTreeShowHidden=1        " Show dotfiles
+let NERDTreeIgnore=['\.swp$']
 map :nt <Esc>:NERDTree<CR>      " :nt to open
 map :nf <Esc>:NERDTreeFind<CR>  " :nf to jump to current file
 map :nc <Esc>:NERDTreeClose<CR> " :nc to close
