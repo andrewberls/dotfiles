@@ -164,3 +164,10 @@ map :cu <Leader>cu " :cu to uncomment
 nnoremap <Leader>s :call RunNearestSpec()<CR>
 nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
 nnoremap <Leader>l :call RunLastSpec()<CR>"
+
+" vim-indent-guides
+" ig/noig to toggle indent guides
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+map :ig :IndentGuidesEnable<CR>
+map :noig :IndentGuidesDisable<CR>
