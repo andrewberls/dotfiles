@@ -1,15 +1,7 @@
 #!/bin/bash
 
-# Ack aliased to use literal search by default
-#   ack - literal search
-#   acki - case-insensitive search
-#   ackr - regex search
-function ack {
-  ~/bin/ack -Q $@
-}
-
-# 'Find process'. Doesn't show grep itself.
-# Ex: fps redis
+# 'Find process'; grep for a procss without showing grep itself
+# Ex: `fps redis`
 function fps() {
   ps aux | grep -v grep | grep $1
 }
@@ -33,14 +25,11 @@ function dir {
 }
 alias dirk='dir -k'
 
-# 'Find file'. Shows matching files paths within the current directory
+# 'Find file'. Shows files matching a given pattern
 # Ex: ff shared.js
 # => app/assets/javascripts/shared.js
 # => public/javascripts/shared.js
-# => etc...
-function ff {
-  mdfind -onlyin . $1 | grep $1
-}
+alias ff='ack -g'
 
 # Print size of the given directory
 # Ex: dirsize app/ => 25M
@@ -92,6 +81,13 @@ alias dangling='tree -a . | grep swp'
 
 # Rails
 alias be='bundle exec'
+function be {
+  if test -f "bin/spring"; then
+    spring $@
+  else
+    bundle exec $@
+  fi
+}
 alias rake='be rake'
 alias cons='c;be rails console'
 
