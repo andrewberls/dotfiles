@@ -29,7 +29,9 @@ alias dirk='dir -k'
 # Ex: ff shared.js
 # => app/assets/javascripts/shared.js
 # => public/javascripts/shared.js
-alias ff='ack -g'
+function ff {
+  mdfind -onlyin . $1 | grep $1
+}
 
 # Print size of the given directory
 # Ex: dirsize app/ => 25M
