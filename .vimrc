@@ -156,9 +156,11 @@ map :nc <Esc>:NERDTreeClose<CR> " :nc to close
 cnoreabbrev ack Ack! -Q
 cnoreabbrev Ack Ack! -Q
 
-" nerdcommenter
-map :cc <Leader>cb " :cc to comment
-map :cu <Leader>cu " :cu to uncomment
+" NERDCommenter
+" :cc to comment, :cu to uncomment
+map :cc <Leader>cb
+map :cu <Leader>cu
+let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
 
 " vim-rspec
 nnoremap <Leader>s :call RunNearestSpec()<CR>
