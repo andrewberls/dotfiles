@@ -46,14 +46,12 @@ set visualbell
 set t_vb=
 
 " Disable line wrap by default
+" :nw as an additional shortcut for disabling line wrap
 set nowrap
+map :nw <Esc>:set nowrap<CR>
 
 " Kill the damned Ex mode.
 nnoremap Q <nop>
-
-" Map Leader-f to enable folds, Leader-nf to disable
-nnoremap <Leader>f :set foldenable<CR>
-nnoremap <Leader>nf :set nofoldenable<CR>
 
 " Strip trailing whitespace on save
 function! <SID>StripTrailingWhitespaces()
@@ -64,29 +62,37 @@ function! <SID>StripTrailingWhitespaces()
 endfun
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-" Dark grey line numbers
-highlight LineNr ctermfg=darkgrey ctermbg=NONE
-
 set wildignore+=*tmp/*,*gradle/*,*.pyc*,*.a*,*.hi*,*.o*,*target/*,*build/*,*artifacts/*,*lein/*
-
-" Typo fixes
-map :W <Esc>:w
-map :X <Esc>:x
-map K <Esc>k
-
-" jk in insert mode as shortcut for Escape
-inoremap jk <Esc>
-
-" :nw as a shortcut for disabling line wrap
-map :nw <Esc>:set nowrap<CR>
 
 " Show the status line at the bottom
 :set laststatus=2
+
+" Open new split panes to right and bottom
+set splitbelow
+set splitright
+
+" :t as an abbreviation for :tabnew
+ca t tabnew
 
 " ctrl-l - next tab
 " ctrl-h - previous tab
 map <C-l> :tabn<CR>
 map <C-h> :tabp<CR>
+
+" :tb as a shortcut for :tab ball (Opens all buffers in tabs)
+map :tb :tab ball<CR>
+
+" Leader-f to enable folds, Leader-nf to disable
+nnoremap <Leader>f :set foldenable<CR>
+nnoremap <Leader>nf :set nofoldenable<CR>
+
+" jk in insert mode as shortcut for Escape
+inoremap jk <Esc>
+
+" Typo fixes
+map :W <Esc>:w
+map :X <Esc>:x
+map K <Esc>k
 
 " coloc/nocoloc to toggle color column
 map :coloc :set colorcolumn=80<CR>
@@ -99,14 +105,8 @@ map :mks :mksession! s.vim<CR>
 map :pa :set paste<CR>
 map :nopa :set nopaste<CR>
 
-" :t as an abbreviation for :tabnew
-ca t tabnew
-
-" Open symbol in a new tab with ctrl-\
+" Open tag in a new tab with ctrl-\
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-
-" :tb as a shortcut for :tab ball (Opens all buffers in tabs)
-map :tb :tab ball<CR>
 
 " :bo as a shortcut cfor closing all buffers but this one
 map :bo <Esc>:BufOnly<CR>
@@ -114,23 +114,18 @@ map :bo <Esc>:BufOnly<CR>
 " Shift-Tab to de-indent current line (insert mode)
 imap <S-Tab> <C-o><<
 
-" d2s to convert double quotes to single quotes on current line
-map :d2s :s/"/'/g<CR>
-
-" s2d to convert single quotes to double quotes on current line
-map :s2d :s/'/"/g<CR>
-
-" :mouseon and :mouseoff and enabling mouse support
-map :mouseon :set mouse=a<CR>
-map :mouseoff :set mouse=<CR>
-
-" Open new split panes to right and bottom
-set splitbelow
-set splitright
-
 " Enable indentation with tab and shift-tab in visual mode
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
+
+" d2s to convert double quotes to single quotes on current line
+" s2d to convert single quotes to double quotes on current line
+map :d2s :s/"/'/g<CR>
+map :s2d :s/'/"/g<CR>
+
+" :mouseon and :mouseoff to toggle mouse support
+map :mouseon :set mouse=a<CR>
+map :mouseoff :set mouse=<CR>
 
 "
 " Plugin configuation
@@ -146,9 +141,12 @@ let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclu
 " NERDTree
 let NERDTreeShowHidden=1        " Show dotfiles
 let NERDTreeIgnore=['\.swp$']
-map :nt <Esc>:NERDTree<CR>      " :nt to open
-map :nf <Esc>:NERDTreeFind<CR>  " :nf to jump to current file
-map :nc <Esc>:NERDTreeClose<CR> " :nc to close
+" :nt to open
+" :nf to jump to current file
+" :nc to close
+map :nt <Esc>:NERDTree<CR>
+map :nf <Esc>:NERDTreeFind<CR>
+map :nc <Esc>:NERDTreeClose<CR>
 
 " Ack
 " :ack as an alias for :Ack! -Q
@@ -165,7 +163,6 @@ let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
 " vim-rspec
 nnoremap <Leader>s :call RunNearestSpec()<CR>
 nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
-nnoremap <Leader>l :call RunLastSpec()<CR>"
 
 " vim-indent-guides
 " ig/noig to toggle indent guides
