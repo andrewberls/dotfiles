@@ -127,6 +127,9 @@ map :s2d :s/'/"/g<CR>
 map :mouseon :set mouse=a<CR>
 map :mouseoff :set mouse=<CR>
 
+" :sy to yank into system clipboard
+map :sy "+y
+
 "
 " Plugin configuation
 "

@@ -17,7 +17,7 @@
 --type-set=ragel=.rl
 --type-set=tmstuff=.tmproj,.tm_build_errors
 --type-set=xcode=.pbxproj,.pbxuser,.perspectivev3
--type-add=css=.scss
+--type-add=css=.scss
 
 --ignore-dir=.bundle
 --ignore-dir=asset-cache
@@ -37,5 +37,6 @@
 --ignore-dir=vendor
 --ignore-file=is:.lein-repl-history
 --ignore-file=is:gc.log
+--ignore-file=is:tags
 
 --smart-case
