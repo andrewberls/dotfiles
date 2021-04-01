@@ -105,8 +105,19 @@ map :mks :mksession! s.vim<CR>
 map :pa :set paste<CR>
 map :nopa :set nopaste<CR>
 
-" Open tag in a new tab with ctrl-\
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+" :ct to open tag in new tab
+map :ct :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+
+" :cv to open tag in vertical split
+map :cv :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+" :cg to jump into tag, or show listing if multiple
+map :cg g<C-]>
+
+" <C-t> to jump backwards in tag stack, <C-y> forwards
+" :cb an alias for backwards
+map <C-y> :tag<CR>
+map :cb <C-t>
 
 " :bo as a shortcut cfor closing all buffers but this one
 map :bo <Esc>:BufOnly<CR>
@@ -129,6 +140,7 @@ map :mouseoff :set mouse=<CR>
 
 " :sy to yank into system clipboard
 map :sy "+y
+map :su "+y " Typo fix
 
 "
 " Plugin configuation
