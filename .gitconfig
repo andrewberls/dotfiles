@@ -7,3 +7,5 @@
 	autocrlf = input
 	editor = vim
 	pager = less -F -X
+[user]
+	email = andrew.berls@gmail.com
