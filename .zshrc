@@ -58,7 +58,7 @@ function precmd() {
 }
 
 # Load up autojump (if present)
-[[ -f ~/.autojump/etc/profile.d/autojump.zsh ]] && source ~/.autojump/etc/profile.d/autojump.zsh
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
 # Load aliases
 if [ -f ~/.sh_aliases ]; then
