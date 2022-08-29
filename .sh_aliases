@@ -141,10 +141,20 @@ alias gds='gd --staged'
 alias gitm='git commit --verbose'
 alias gr='git refresh'
 alias grc='git rebase --continue'
+alias gra='git rebase --abort'
 alias grm='git rebase master'
 alias gsl='git stash list'
 alias gsp='git stash pop'
-alias master='co master'
+function master {
+  # Switch to the `main` branch if it exists, else `master`
+  git show-ref --verify --quiet refs/heads/main
+  if [[ $? == 0 ]]
+  then
+    git checkout main
+  else
+    git checkout master
+  fi
+}
 alias msater='master'
 alias mm='git merge master'
 alias resethead='git reset --soft HEAD\^ && git unstage .'
