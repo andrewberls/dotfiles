@@ -139,6 +139,7 @@ alias gcb='git clean-branches'
 alias gd='git diff'
 alias gds='gd --staged'
 alias gitm='git commit --verbose'
+alias wip="git commit -m 'WIP'"
 alias gr='git refresh'
 alias grc='git rebase --continue'
 alias gra='git rebase --abort'

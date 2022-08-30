@@ -21,8 +21,7 @@ HISTFILESIZE=2000
 export TERM=xterm-256color
 
 # Set PATH
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
-export PATH=$PATH:$HOME/bin
+export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH
 
 # Ignore case and display colored output
 export GREP_OPTIONS='-i --color=auto'
