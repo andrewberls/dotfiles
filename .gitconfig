@@ -7,6 +7,7 @@
   autocrlf = input
   editor = vim
   pager = less -F -X
+  excludesfile = /Users/andrew/.gitignore
 [user]
   name = Andrew Berls
   email = andrew.berls@gmail.com
