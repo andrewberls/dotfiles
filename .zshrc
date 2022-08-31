@@ -2,9 +2,9 @@ DISABLE_AUTO_UPDATE="true"
 ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
-# Use the zsh completion system
-autoload -U compinit
-compinit
+# Disable autocorrect
+unsetopt correct_all
+unsetopt correct
 
 # Set up history
 #   - Don't share history between terminals
