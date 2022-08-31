@@ -131,6 +131,17 @@ function glc {
    git show --oneline "$sha"
 }
 
+function masterbranch {
+  git show-ref --verify --quiet refs/heads/main
+  if [[ $? == 0 ]]
+  then
+    local branch="main"
+  else
+    local branch="master"
+  fi
+  echo $branch
+}
+
 alias amend='git commit --amend'
 alias co='git checkout'
 alias copycommit='git format-commit | pbcopy'
@@ -143,21 +154,18 @@ alias wip="git commit -m 'WIP'"
 alias gr='git refresh'
 alias grc='git rebase --continue'
 alias gra='git rebase --abort'
-alias grm='git rebase master'
+function grm {
+  git rebase "$(masterbranch)"
+}
 alias gsl='git stash list'
 alias gsp='git stash pop'
 function master {
-  # Switch to the `main` branch if it exists, else `master`
-  git show-ref --verify --quiet refs/heads/main
-  if [[ $? == 0 ]]
-  then
-    git checkout main
-  else
-    git checkout master
-  fi
+  git checkout "$(masterbranch)"
 }
 alias msater='master'
-alias mm='git merge master'
+function mm {
+  git merge "$(masterbranch)"
+}
 alias resethead='git reset --soft HEAD\^ && git unstage .'
 alias s='git status'
 alias uns='git unstage'
