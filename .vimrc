@@ -76,9 +76,13 @@ map <C-l> :tabn<CR>
 map <C-h> :tabp<CR>
 map :tb :tab ball<CR>
 
-" Leader-f to enable folds, Leader-nf to disable
+" Folds
+"   Leader-f to enable folds, Leader-nf to disable
+"   :fo to recursively open fold, :cf to close
 nnoremap <Leader>f :set foldenable<CR>
 nnoremap <Leader>nf :set nofoldenable<CR>
+nnoremap :fo zA
+nnoremap :cf zc
 
 " jk in insert mode as shortcut for Escape
 inoremap jk <Esc>
