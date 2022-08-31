@@ -35,9 +35,8 @@ setopt numericglobsort
 # Don't exit on EOF, require exit or logout
 setopt ignore_eof
 
-# Prevent automatically overwriting an existing file
-# Can force clobber with >!, e.g. `cat fileone >! filetwo`
-setopt no_clobber
+# Allow clobbering (overwriting existing files)
+setopt clobber
 
 # Preferred editor for local and remote sessions
 export EDITOR='vim'
@@ -48,10 +47,7 @@ export EDITOR='vim'
 function parse_git_branch {
   git branch 2> /dev/null | grep "*" | sed -e 's/* \(.*\)/ (\1)/g'
 }
-
 NORMAL=$'\033[0m'
-
-# Green local prompt
 function precmd() {
   export PROMPT="%{$FG[034]%}%~/%{$FG[207]%}%B$(parse_git_branch)%b%{$NORMAL%} $ "
 }
@@ -59,12 +55,5 @@ function precmd() {
 # Load up autojump (if present)
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
-# Load aliases
-if [ -f ~/.sh_aliases ]; then
-    source ~/.sh_aliases
-fi
-
-# Private aliases, can't touch this
-if [ -f ~/.private_aliases ]; then
-  source ~/.private_aliases
-fi
+[[ -f "$HOME/.sh_aliases" ]] && source "$HOME/.sh_aliases"
+[[ -f "$HOME/.private_aliases" ]] && source "$HOME/.private_aliases"
