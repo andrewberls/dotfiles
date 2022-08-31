@@ -1,11 +1,12 @@
 [color]
-	ui = true
+  ui = true
 [alias]
-	aliases = config --get-regexp alias
-	unstage = reset --
+  aliases = config --get-regexp alias
+  unstage = reset --
 [core]
-	autocrlf = input
-	editor = vim
-	pager = less -F -X
+  autocrlf = input
+  editor = vim
+  pager = less -F -X
 [user]
-	email = andrew.berls@gmail.com
+  name = Andrew Berls
+  email = andrew.berls@gmail.com
