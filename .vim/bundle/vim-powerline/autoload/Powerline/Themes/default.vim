@@ -1,3 +1,5 @@
+" NOTE(aberls): removed fileformat, fileencoding, filetype after virtualenv:statusline
+" Make sure to :PowerlineClearCache after changing
 let g:Powerline#Themes#default#theme = Pl#Theme#Create(
 	\ Pl#Theme#Buffer(''
 		\ , 'paste_indicator'
@@ -11,9 +13,6 @@ let g:Powerline#Themes#default#theme = Pl#Theme#Create(
 		\ , Pl#Segment#Split()
 		\ , 'rvm:string'
 		\ , 'virtualenv:statusline'
-		\ , 'fileformat'
-		\ , 'fileencoding'
-		\ , 'filetype'
 		\ , 'scrollpercent'
 		\ , 'lineinfo'
 	\ ),
