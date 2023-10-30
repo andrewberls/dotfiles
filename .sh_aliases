@@ -110,15 +110,20 @@ alias at='cat'
 export GIT_COMPLETION_NO_REMOTE_BRANCHES=1
 export GIT_COMPLETION_NO_TAGS=1
 
-# Run git status if in git repo, else ls -la
-function cs {
-  clear
+# Run `git status` if in git repo, else `ls -lah`
+function status {
   if ! git ls-files >& /dev/null
   then
     ls -lah
   else
     git status
   fi
+}
+
+# Run git status if in git repo, else ls -la
+function cs {
+  clear
+  status
 }
 
 function csf {
@@ -167,6 +172,7 @@ function mm {
   git merge "$(masterbranch)"
 }
 alias resethead='git reset --soft HEAD\^ && git unstage .'
+alias rh='resethead'
 alias s='git status'
 alias uns='git unstage'
 
@@ -181,7 +187,7 @@ function report {
   git branch --merged
   echo "Not merged:"
   git branch --no-merged
-  git status
+  status
 }
 alias r='report'
 
@@ -206,6 +212,11 @@ function glo {
   else
     git log --oneline $1
   fi
+}
+
+# "checkout remote branch"
+function cor {
+  git checkout -b $1 origin/$1
 }
 
 function conflict () {

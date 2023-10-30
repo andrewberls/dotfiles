@@ -24,6 +24,9 @@ set backspace=indent,eol,start
 
 " Make vim use old regex engine to fix lag
 " https://github.com/xolox/vim-easytags/issues/88#issuecomment-69474765
+" 0 = automatic selection
+" 1 = old engine
+" 2 = NFA engine (fixes lag for Typescript?)
 set regexpengine=1
 
 " Fix mouse after 233 columns
@@ -94,6 +97,7 @@ map K <Esc>k
 
 " coloc/nocoloc to toggle color column
 map :coloc :set colorcolumn=80<CR>
+map :longcoloc :set colorcolumn=120<CR>
 map :nocoloc :set colorcolumn=<CR>
 
 " mks to save session file
