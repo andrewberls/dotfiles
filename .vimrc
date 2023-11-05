@@ -3,6 +3,7 @@ execute pathogen#infect()
 
 filetype plugin indent on " Enable filetype plugins for lang-specific scripts
 syntax on                 " Enable syntax highlighting
+colorscheme codeschool
 
 set nocompatible      " Disable vi compatability
 set expandtab         " Spaces to tabs
