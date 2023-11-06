@@ -269,8 +269,12 @@ vim.keymap.set('n', ':s2d', ':s/\'/"/g<CR>')
 vim.keymap.set('v', ':sy', '"+y<CR>')
 vim.keymap.set('v', ':su', '"+y<CR>')
 
--- TODO
--- map :cc to comment
+-- Comment.nvim
+--   :cc to toggle comments
+require('Comment').setup({
+  toggler = { line = ':cc' },
+  opleader = { line = ':cc' }
+})
 
 -- NvimTree
 --   :nt to open
