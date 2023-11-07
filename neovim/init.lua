@@ -17,7 +17,27 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  'tpope/vim-fugitive', -- Git
+  { 'tpope/vim-fugitive' }, -- Git
+
+  { 'RRethy/nvim-treesitter-endwise' }, -- Autocomplete Ruby "end"
+
+  { 'nvim-tree/nvim-tree.lua' }, -- File tree
+
+  { 'myusuf3/numbers.vim' }, -- Toggle line number style depending on focus
+
+  { 'AndrewRadev/splitjoin.vim' }, -- Convert between single/multi line statements
+
+  { 'terryma/vim-multiple-cursors' }, -- Multiple cursors
+
+  { 'tpope/vim-surround' }, -- Surround text
+
+  { 'echasnovski/mini.pairs', version = '*' }, -- Autocomplete braces/quotes
+
+  { 'mattn/emmet-vim' }, -- HTML expansion
+
+  -- TODO: vim-rspec
+
+  { 'numToStr/Comment.nvim', opts = {} }, -- Toggle comments for lines/visual regions
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -54,17 +74,17 @@ require('lazy').setup({
     },
   },
 
-  -- Show matching keybinds
+  -- Show matching keybinds for in-progress commands
   { 'folke/which-key.nvim', opts = {} },
 
   {
-    -- Theme inspired by Atom
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'onedark'
     end,
   },
+  -- { 'EdenEast/nightfox.nvim' },
 
   {
     -- Set lualine as statusline
@@ -79,43 +99,6 @@ require('lazy').setup({
       },
     },
   },
-
-
-  { 'RRethy/nvim-treesitter-endwise' }, -- TODO: doesn't work?
-
-  { 'nvim-tree/nvim-tree.lua' },
-
-  { 'myusuf3/numbers.vim' },
-
-  { 'AndrewRadev/splitjoin.vim' },
-
-  { 'terryma/vim-multiple-cursors' },
-
-  { 'tpope/vim-surround' },
-
-  { 'mattn/emmet-vim' }, -- HTML expansion
-
-  -- TODO
-  --   vim-endwise/
-  --   vim-rspec/
-  --   vim-ruby/
-  --
-  -- Done
-  --   splitjoin.vim/
-  --   vim-multiple-cursors/
-  --   vim-surround/
-  --   zencoding-vim/
-  --
-  -- Unnecessary / already have
-  --   numbers.vim/
-  --   ctrlp.vim/
-  --   vim-powerline/
-  --   vim-fugitive/
-  --   nerdcommenter/
-  --   ack.vim/
-
-  -- "gcc" to toggle comment for lines/visual regions
-  { 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -145,6 +128,8 @@ require('lazy').setup({
 }, {})
 
 -- [[ Options ]]
+
+-- vim.cmd.colorscheme 'nightfox'
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -186,12 +171,6 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 -- [[ Keymaps ]]
-
--- vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
--- Remap for dealing with word wrap
--- vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
--- vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Open new split panes to the right and bottom
 vim.opt.splitbelow = true
@@ -285,6 +264,7 @@ vim.keymap.set('n', ':nf', ':NvimTreeFindFile<CR>')
 vim.keymap.set('n', ':nc', ':NvimTreeToggle<CR>')
 
 require("nvim-tree").setup({
+  view = { width = 42 },
   git = { enable = false },
   renderer = {
     icons = {
@@ -306,6 +286,8 @@ require("nvim-tree").setup({
     }
   }
 })
+
+require('mini.pairs').setup()
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -342,6 +324,8 @@ vim.keymap.set('n', ':ack', require('telescope.builtin').live_grep, { desc = '[S
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
+    endwise = { enable = true },
+
     -- Add languages to be installed here that you want installed for treesitter
     ensure_installed = { 'ruby', 'vimdoc', 'vim', 'bash' },
 
@@ -350,7 +334,6 @@ vim.defer_fn(function()
 
     highlight = { enable = true },
     indent = { enable = true },
-    endwise = { enable = true }, -- TODO
     incremental_selection = {
       enable = true,
       keymaps = {
@@ -520,51 +503,51 @@ mason_lspconfig.setup_handlers {
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
-local cmp = require 'cmp'
-local luasnip = require 'luasnip'
-require('luasnip.loaders.from_vscode').lazy_load()
-luasnip.config.setup {}
-
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert {
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete {},
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.locally_jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  },
-}
+-- local cmp = require 'cmp'
+-- local luasnip = require 'luasnip'
+-- require('luasnip.loaders.from_vscode').lazy_load()
+-- luasnip.config.setup {}
+--
+-- cmp.setup {
+--   snippet = {
+--     expand = function(args)
+--       luasnip.lsp_expand(args.body)
+--     end,
+--   },
+--   mapping = cmp.mapping.preset.insert {
+--     ['<C-n>'] = cmp.mapping.select_next_item(),
+--     ['<C-p>'] = cmp.mapping.select_prev_item(),
+--     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+--     ['<C-f>'] = cmp.mapping.scroll_docs(4),
+--     ['<C-Space>'] = cmp.mapping.complete {},
+--     ['<CR>'] = cmp.mapping.confirm {
+--       behavior = cmp.ConfirmBehavior.Replace,
+--       select = true,
+--     },
+--     ['<Tab>'] = cmp.mapping(function(fallback)
+--       if cmp.visible() then
+--         cmp.select_next_item()
+--       elseif luasnip.expand_or_locally_jumpable() then
+--         luasnip.expand_or_jump()
+--       else
+--         fallback()
+--       end
+--     end, { 'i', 's' }),
+--     ['<S-Tab>'] = cmp.mapping(function(fallback)
+--       if cmp.visible() then
+--         cmp.select_prev_item()
+--       elseif luasnip.locally_jumpable(-1) then
+--         luasnip.jump(-1)
+--       else
+--         fallback()
+--       end
+--     end, { 'i', 's' }),
+--   },
+--   sources = {
+--     { name = 'nvim_lsp' },
+--     { name = 'luasnip' },
+--   },
+-- }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
