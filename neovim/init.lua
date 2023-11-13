@@ -205,6 +205,9 @@ vim.keymap.set('n', '<c-l>', ':tabn<CR>')
 vim.keymap.set('n', '<c-h>', ':tabp<CR>')
 vim.keymap.set('n', ':tb', ':tab ball<CR>')
 
+-- Git
+vim.keymap.set('n', ':Gblame', ':Git blame')
+
 -- Folds
 -- TODO
 
@@ -256,6 +259,15 @@ require('Comment').setup({
 })
 vim.keymap.set('n', ':cu', ':normal :cc<CR>')
 
+require('lualine').setup({
+  sections = {
+    lualine_c = {
+      -- Show relative filepaths in the status bar
+      { 'filename', path = 1 }
+    }
+  }
+})
+
 -- NvimTree
 --   :nt to open
 --   :nf to open to current file
@@ -265,7 +277,7 @@ vim.keymap.set('n', ':nf', ':NvimTreeFindFile<CR>')
 vim.keymap.set('n', ':nc', ':NvimTreeToggle<CR>')
 
 require("nvim-tree").setup({
-  view = { width = 42 },
+  view = { width = 45 },
   git = { enable = false },
   renderer = {
     icons = {
@@ -304,6 +316,12 @@ require('mini.pairs').setup()
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
+    layout_config = {
+      horizontal = {
+        preview_cutoff = 250,
+        width = 0.9,
+      }
+    },
     mappings = {
       i = {
         ['<C-u>'] = false,
