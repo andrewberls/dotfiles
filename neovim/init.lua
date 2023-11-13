@@ -35,9 +35,9 @@ require('lazy').setup({
 
   { 'mattn/emmet-vim' }, -- HTML expansion
 
-  -- TODO: vim-rspec
-
   { 'numToStr/Comment.nvim', opts = {} }, -- Toggle comments for lines/visual regions
+
+  { 'vim-test/vim-test' }, -- Test runner
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -287,6 +287,16 @@ require("nvim-tree").setup({
     }
   }
 })
+
+
+-- vim-test
+--   Run tests with :terminal in a split-right window
+--   Leader-s to run nearest spec, Leader-t to run whole file
+vim.cmd('let test#strategy = "neovim"')
+vim.cmd('let test#neovim#term_position = "vert"')
+vim.cmd('let test#neovim#term_position = "vert botright"')
+vim.keymap.set('n', '<Leader>s', ':TestNearest<CR>')
+vim.keymap.set('n', '<Leader>t', ':TestFile<CR>')
 
 require('mini.pairs').setup()
 
