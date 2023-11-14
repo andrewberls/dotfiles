@@ -306,6 +306,11 @@ require('onedark').setup {
 }
 require('onedark').load()
 
+-- Disable LSP semantic highlights which snipe colorscheme on load
+for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+  vim.api.nvim_set_hl(0, group, {})
+end
+
 -- Comment.nvim
 --   :cc/:cu to toggle comments
 require('Comment').setup({
