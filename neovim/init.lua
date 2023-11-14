@@ -255,8 +255,8 @@ vim.keymap.set('v', '<S-Tab>', '<gv')
 
 -- :d2s to convert double quotes to single quotes on current line
 -- :s2d to convert single quotes to double quotes on current line
-vim.keymap.set('n', ':d2s', ':s/"/\'/g<CR>')
-vim.keymap.set('n', ':s2d', ':s/\'/"/g<CR>')
+vim.keymap.set({'n', 'v'}, ':d2s', ':s/"/\'/g<CR>')
+vim.keymap.set({'n', 'v'}, ':s2d', ':s/\'/"/g<CR>')
 
 -- :sy and :su to yank into system clipboard
 vim.keymap.set('v', ':sy', '"+y<CR>')
