@@ -255,6 +255,48 @@ vim.keymap.set('n', ':s2d', ':s/\'/"/g<CR>')
 vim.keymap.set('v', ':sy', '"+y<CR>')
 vim.keymap.set('v', ':su', '"+y<CR>')
 
+-- [[ Configure colorscheme ]]
+require('onedark').setup {
+  style = 'warmer',
+  code_style = {
+    comments = 'none'
+  },
+  colors = {
+    bg0 = '#000003', -- background
+    codeschool_blue = '#5f87d7',
+    codeschool_orange = '#dda790',
+    codeschool_lightpurple = '#afafd7',
+    codeschool_turquoise = '#5fafd7',
+  },
+  highlights = {
+    ["@comment"] = {fg = '#969696'},
+    ["@keyword"] = {fg = '#dda790'},             -- module, class, return
+    ["@keyword.function"] = {fg = '$codeschool_orange'}, -- def
+    ["@symbol"] = {fg = '$codeschool_blue'},     -- symbols
+    ["@punctuation.delimiter"] = {fg = 'white'}, -- commas
+    ["@punctuation.bracket"] = {fg = 'white'},   -- parens, brackets/braces
+    ["@operator"] = {fg = 'white'},              -- &&, =, etc
+    ["@parameter"] = {fg = 'white'},             -- method definition params (positional + kwarg)
+    ["@variable"] = {fg = 'white'},              -- local variables, arguments
+    ["@label"] = {fg = '$codeschool_turquoise'}, -- instance variables
+    ["@type"] = {fg = '$codeschool_lightpurple'}, -- constants
+    ["@conditional"] = {fg = '$codeschool_orange'}, -- if/else
+    ["@function"] = {fg = '#a6ccf2'},            -- func names, call chains
+    ["@number"] = {fg = '$codeschool_blue'},
+    ["@float"] = {fg = '$codeschool_blue'},
+    ["@boolean"] = {fg = '$codeschool_blue'},
+    ["@constant"] = {fg = '$codeschool_lightpurple'},
+    ["@string"] = {fg = '#87af5f'},
+    ["@constant.builtin"] = {fg = '$codeschool_turquoise'}, -- nil
+    ["@punctuation.special"] = {fg = 'white'},              -- string interp #{}
+    ["@exception"] = {fg = '$codeschool_orange'},           -- raise (doesn't work?)
+    ["@variable.builtin"] = {fg = '$codeschool_turquoise'}, -- super, self
+    ["@repeat"] = {fg = '$codeschool_orange'},              -- break
+    ["@none"] = {fg = 'white'}, -- :: inside string interpolation (??)
+  }
+}
+require('onedark').load()
+
 -- Comment.nvim
 --   :cc/:cu to toggle comments
 require('Comment').setup({
