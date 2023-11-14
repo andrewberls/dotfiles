@@ -293,6 +293,8 @@ require('onedark').setup {
     ["@variable.builtin"] = {fg = '$codeschool_turquoise'}, -- super, self
     ["@repeat"] = {fg = '$codeschool_orange'},              -- break
     ["@none"] = {fg = 'white'}, -- :: inside string interpolation (??)
+    ["@string.regex"] = {fg = '#bda061'},
+    ["@string.escape"] = {fg = 'white'}, -- \n, etc
   }
 }
 require('onedark').load()
