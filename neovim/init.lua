@@ -322,8 +322,8 @@ require('telescope').setup {
   defaults = {
     layout_config = {
       horizontal = {
-        preview_cutoff = 250,
-        width = 0.9,
+        preview_cutoff = 999, -- Don't show preview panel
+        width = 0.95,
       }
     },
     mappings = {
