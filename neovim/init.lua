@@ -204,7 +204,16 @@ vim.keymap.set('n', ':tb', ':tab ball<CR>')
 vim.keymap.set('n', ':Gblame', ':Git blame')
 
 -- Folds
--- TODO
+--   Leader-f to enable folds, Leader-nf to disable
+--   Folds are disabled by default
+vim.opt.foldlevel = 1
+vim.opt.foldenable = false
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.keymap.set('n', '<Leader>f', ':set foldenable<CR>')
+vim.keymap.set('n', '<Leader>nf', ':set nofoldenable<CR>')
+-- vim.keymap.set('n', ':fo', 'zA') -- When closed: open recursively. When open: close recursively, set foldenable
+-- vim.keymap.set('n', ':cf', 'zc') -- Close one fold under the cursor, set foldenable
 
 --  jk in insert mode as a shortcut for Escape
 vim.keymap.set('i', 'jk', '<ESC>')
