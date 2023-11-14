@@ -232,12 +232,19 @@ vim.keymap.set('n', ':nocoloc', ':set colorcolumn=<CR>')
 vim.keymap.set('n', ':mks', ':mksession! s.vim<CR>')
 
 -- :pa/:nopa to toggle paste
--- TODO: SHOW PASTE MODE IN STATUSLINE
 vim.keymap.set('n', ':pa', ':set paste<CR>')
 vim.keymap.set('n', ':nopa', ':set nopaste<CR>')
 
--- TODO: TAGS
--- TODO: :bo
+-- Tags
+--   :cg to jump into tag, or show listing if multiple
+--   :ct to open tag in new tab
+--   :cv to open tag in vertical split
+--   <C-t> to jump backwards in tag stack (alias :cb), <C-y> forwards
+vim.cmd('map :ct :tab split<CR>:exec("tag ".expand("<cword>"))<CR>')
+vim.cmd('map :cv :vsp <CR>:exec("tag ".expand("<cword>"))<CR>')
+vim.cmd('map :cg g<C-]>')
+vim.cmd('map <C-y> :tag<CR>')
+vim.cmd('map :cb <C-t>')
 
 -- Shift-tab to de-indent current line in insert mode
 vim.keymap.set('i', '<S-Tab>', '<C-o><<')
