@@ -69,7 +69,8 @@ alias up....='cd ../../../../'
 alias up.....='cd ../../../../../'
 
 # Vim
-alias v='vim'
+alias vim='nvim'
+alias v='nvim'
 function vims {
   if [[ -n "$1" ]]
   then
@@ -78,7 +79,7 @@ function vims {
     vim -S s.vim
   fi
 }
-alias vimr='vim -R'
+alias vimr='nvim -R'
 alias dangling='tree -a . | grep swp'
 
 # Rails
@@ -98,9 +99,9 @@ alias clera='clear'
 alias qcs='cs'
 alias xit='exit'
 alias rpsec='rspec'
-alias vi='vim'
-alias im='vim'
-alias :e='vim'
+alias vi='nvim'
+alias im='nvim'
+alias :e='nvim'
 alias 'jc'='j'
 alias 'J'='j'
 alias ck='ack'

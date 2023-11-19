@@ -39,7 +39,7 @@ setopt ignore_eof
 setopt clobber
 
 # Preferred editor for local and remote sessions
-export EDITOR='vim'
+export EDITOR='nvim'
 
 # Set the prompt with the following format:
 #   ~/Documents $
