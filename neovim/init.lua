@@ -131,6 +131,10 @@ require('lazy').setup({
 
 -- vim.cmd.colorscheme 'nightfox'
 
+-- Fix Ruby indentation; prevent `.` from causing dedents
+-- https://github.com/nvim-treesitter/nvim-treesitter/issues/2566
+vim.cmd [[autocmd FileType ruby setlocal indentkeys-=.]]
+
 -- Set highlight on search
 vim.o.hlsearch = false
 
