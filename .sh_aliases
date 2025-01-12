@@ -35,7 +35,13 @@ function dirsize {
 }
 
 function linecount {
-  cat $1 | wc -l
+  if [ "$#" -gt 1 ]; then
+    for file in "$@"; do
+      echo "$file: $(cat $file | wc -l)"
+    done
+  else
+    cat $1 | wc -l
+  fi
 }
 
 # Copy a file to a clipboard
