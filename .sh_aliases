@@ -25,13 +25,8 @@ function dir {
 }
 alias dirk='dir -k'
 
-# 'Find file'. Shows files matching a given pattern
-# Ex: ff shared.js
-# => app/assets/javascripts/shared.js
-# => public/javascripts/shared.js
-function ff {
-  mdfind -onlyin . $1 | grep $1
-}
+# 'find file' alias for `fd`
+alias ff='fd'
 
 # Print size of the given directory
 # Ex: dirsize app/ => 25M
