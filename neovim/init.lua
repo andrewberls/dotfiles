@@ -386,7 +386,6 @@ vim.keymap.set('n', ':nt', ':NvimTreeFocus<CR>')
 vim.keymap.set('n', ':nf', ':NvimTreeFindFile<CR>')
 vim.keymap.set('n', ':nc', ':NvimTreeToggle<CR>')
 
-
 -- vim-test
 --   Run tests with :terminal in a split-right window
 --   Leader-s to run nearest spec, Leader-t to run whole file

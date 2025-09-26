@@ -33,4 +33,4 @@ if git_root != Dir.pwd
   selected.gsub!(/^#{prefix}/, '')
 end
 
-exec "vim #{selected}"
+exec "$EDITOR #{selected}"
