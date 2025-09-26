@@ -25,8 +25,8 @@ function dir {
 }
 alias dirk='dir -k'
 
-# 'find file' alias for `fd`
-alias ff='fd'
+# 'Find file'. Shows files matching a given pattern
+alias ff='fd' # brew install fd, https://github.com/sharkdp/fd
 
 # Print size of the given directory
 # Ex: dirsize app/ => 25M
@@ -35,6 +35,8 @@ function dirsize {
 }
 
 function linecount {
+  # If given multiple files, output filename and count for each
+  # Else if given a single file just output the count
   if [ "$#" -gt 1 ]; then
     for file in "$@"; do
       echo "$file: $(cat $file | wc -l)"

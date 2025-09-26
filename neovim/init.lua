@@ -39,6 +39,8 @@ require('lazy').setup({
 
   { 'vim-test/vim-test' }, -- Test runner
 
+  { 'schickling/vim-bufonly' }, -- Close all buffers except the current one
+
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -135,6 +137,25 @@ require('lazy').setup({
 -- https://github.com/nvim-treesitter/nvim-treesitter/issues/2566
 vim.cmd [[autocmd FileType ruby setlocal indentkeys-=.]]
 
+-- Convert tabs to spaces
+vim.opt.expandtab = true
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+
+-- Disable word wrapping
+vim.opt.textwidth = 0
+
+-- Further effort to disable word wrapping for .txt files, which were
+-- being set to 100 somewhere I can't find
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.txt",
+  callback = function()
+    vim.opt_local.textwidth = 0
+  end,
+})
+
 -- Set highlight on search
 vim.o.hlsearch = false
 
@@ -199,10 +220,12 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 --   ctrl-l - next tab
 --   ctrl-h - previous tab
 --   :tb as a shortcut for :tab ball (Opens all buffers in tabs)
+--   :bo to close all buffers except this one
 vim.cmd('cabbrev t tabnew')
 vim.keymap.set('n', '<c-l>', ':tabn<CR>')
 vim.keymap.set('n', '<c-h>', ':tabp<CR>')
 vim.keymap.set('n', ':tb', ':tab ball<CR>')
+vim.keymap.set('n', ':bo', ':BufOnly<CR>')
 
 -- Git
 vim.keymap.set('n', ':Gblame', ':Git blame')
@@ -288,7 +311,7 @@ require('onedark').setup {
     ["@punctuation.bracket"] = {fg = 'white'},   -- parens, brackets/braces
     ["@operator"] = {fg = 'white'},              -- &&, =, etc
     ["@parameter"] = {fg = 'white'},             -- method definition params (positional + kwarg)
-    ["@variable"] = {fg = 'white'},              -- local variables, arguments
+    ["@variable"] = {fg = 'white'},              -- local/global variables, arguments
     ["@label"] = {fg = '$codeschool_turquoise'}, -- instance variables
     ["@type"] = {fg = '$codeschool_lightpurple'}, -- constants
     ["@conditional"] = {fg = '$codeschool_orange'}, -- if/else
@@ -419,7 +442,7 @@ vim.defer_fn(function()
     endwise = { enable = true },
 
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'ruby', 'vimdoc', 'vim', 'bash' },
+    ensure_installed = { 'ruby', 'vimdoc', 'vim', 'bash', 'kotlin' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
@@ -475,14 +498,14 @@ local on_attach = function(_, bufnr)
   -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   -- nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
   -- nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  -- nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+  nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
   -- nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
   -- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
-  -- nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   -- nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -522,8 +545,7 @@ require('mason-lspconfig').setup()
 --
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
-local servers = {
-}
+local servers = {}
 
 -- Setup neovim lua configuration
 -- require('neodev').setup()

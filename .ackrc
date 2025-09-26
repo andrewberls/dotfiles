@@ -28,7 +28,7 @@
 --ignore-dir=gradle
 --ignore-dir=images
 --ignore-dir=log
---ignore-dir=public/assets
+--ignore-dir=public
 --ignore-dir=repo
 --ignore-dir=resources/static/js-out
 --ignore-dir=target
