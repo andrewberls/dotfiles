@@ -306,28 +306,36 @@ require('onedark').setup {
     ["@comment"] = {fg = '#969696'},
     ["@keyword"] = {fg = '#dda790'},             -- module, class, return
     ["@keyword.function"] = {fg = '$codeschool_orange'}, -- def
-    ["@symbol"] = {fg = '$codeschool_blue'},     -- symbols
+    ["@symbol"] = {fg = '$codeschool_blue'},                 -- symbols (old)
+    ["@string.special.symbol"] = {fg = '$codeschool_blue'},  -- symbols (new)
     ["@punctuation.delimiter"] = {fg = 'white'}, -- commas
     ["@punctuation.bracket"] = {fg = 'white'},   -- parens, brackets/braces
     ["@operator"] = {fg = 'white'},              -- &&, =, etc
-    ["@parameter"] = {fg = 'white'},             -- method definition params (positional + kwarg)
+    ["@parameter"] = {fg = 'white'},             -- method definition params (positional + kwarg; old)
+    ["@variable.parameter"] = {fg = 'white'},    -- method definition params (positional + kwarg; new)
     ["@variable"] = {fg = 'white'},              -- local/global variables, arguments
-    ["@label"] = {fg = '$codeschool_turquoise'}, -- instance variables
+    ["@label"] = {fg = '$codeschool_turquoise'}, -- instance variables (old)
+    ["@variable.member"] = {fg = '$codeschool_turquoise'}, -- instance variables (new)
     ["@type"] = {fg = '$codeschool_lightpurple'}, -- constants
-    ["@conditional"] = {fg = '$codeschool_orange'}, -- if/else
+    ["@conditional"] = {fg = '$codeschool_orange'},         -- if/else (old)
+    ["@keyword.conditional"] = {fg = '$codeschool_orange'}, -- if/else (new)
     ["@function"] = {fg = '#a6ccf2'},            -- func names, call chains
+    ["@function.builtin"] = {fg = '#a6ccf2'},    -- ex: extend (new)
     ["@number"] = {fg = '$codeschool_blue'},
-    ["@float"] = {fg = '$codeschool_blue'},
+    ["@float"] = {fg = '$codeschool_blue'},        -- float (old)
+    ["@number.float"] = {fg = '$codeschool_blue'}, -- float (new)
     ["@boolean"] = {fg = '$codeschool_blue'},
     ["@constant"] = {fg = '$codeschool_lightpurple'},
     ["@string"] = {fg = '#87af5f'},
     ["@constant.builtin"] = {fg = '$codeschool_turquoise'}, -- nil
     ["@punctuation.special"] = {fg = 'white'},              -- string interp #{}
-    ["@exception"] = {fg = '$codeschool_orange'},           -- raise (doesn't work?)
+    ["@keyword.exception"] = {fg = '$codeschool_orange'},   -- raise
     ["@variable.builtin"] = {fg = '$codeschool_turquoise'}, -- super, self
-    ["@repeat"] = {fg = '$codeschool_orange'},              -- break
+    ["@repeat"] = {fg = '$codeschool_orange'},              -- break (old)
+    ["@keyword.repeat"] = {fg = '$codeschool_orange'},      -- break (new)
     ["@none"] = {fg = 'white'}, -- :: inside string interpolation (??)
-    ["@string.regex"] = {fg = '#bda061'},
+    ["@string.regex"] = {fg = '#bda061'}, -- regex (old)
+    ["@string.regexp"] = {fg = '#bda061'}, -- regex (new)
     ["@string.escape"] = {fg = 'white'}, -- \n, etc
   }
 }
