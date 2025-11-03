@@ -23,7 +23,7 @@ function dir {
     exit
   fi
 }
-alias dirk='dir -k'
+alias dirk='dir -k; clear'
 
 # 'Find file'. Shows files matching a given pattern
 alias ff='fd' # brew install fd, https://github.com/sharkdp/fd
