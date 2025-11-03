@@ -1,0 +1,55 @@
+" -----------------------------------
+" Options
+" -----------------------------------
+let mapleader = ","
+" set relativenumber
+set ignorecase        " Ignore cases in searches
+set smartcase         " Case sensitive only if pattern includes uppercase letter
+
+" -----------------------------------
+" Plugins
+" -----------------------------------
+set ideajoin   " code-aware line joining
+set commentary " Comment toggle (vim-commentary)
+set surround   " vim-surround
+
+" NERDTree
+"   :nt to open
+"   :nf to jump to current file
+"   :nc to close
+set NERDTree
+let NERDTreeShowHidden=1        " Show dotfiles
+let NERDTreeIgnore=['\.swp$']
+map :nt <Esc>:NERDTree<CR>
+map :nf <Esc>:NERDTreeFind<CR>
+map :nc <Esc>:NERDTreeClose<CR>
+
+" -----------------------------------
+" Shortcuts copied from ~/.vimrc
+" -----------------------------------
+
+" jk in insert mode as shortcut for Escape
+inoremap jk <ESC>
+
+nnoremap <C-h> :action PreviousTab<CR>
+nnoremap <C-l> :action NextTab<CR>
+
+" Typo fixes
+map :W <Esc>:w
+map :X <Esc>:x
+map K <Esc>k
+
+" Shift-Tab to de-indent current line (insert mode)
+imap <S-Tab> <C-o><<
+
+" Enable indentation with tab and shift-tab in visual mode
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
+
+" :sy and :su to yank into system clipboard
+map :sy "+y
+map :su "+y
+
+" :cc and :cu to toggle comment on a line/selection
+map :cc gc_
+map :cu gc_
