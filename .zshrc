@@ -18,6 +18,8 @@ setopt inc_append_history
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+export CLICOLOR=1
+
 export TERM=xterm-256color
 
 # Set PATH
